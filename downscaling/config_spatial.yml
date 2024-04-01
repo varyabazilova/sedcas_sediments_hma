@@ -1,0 +1,65 @@
+project:
+    name: Langtang
+    description: Downscaling for Finse, Benchmarking TopoPyScale
+    authors:
+        - Filhol S.
+        - Aalstad K.
+        - Fiddes J.
+        - adjusted: bazilova v 
+    date: Feb 2024
+    directory: ./
+    start: 2020-01-01
+    end: 2020-01-30
+    split:
+        IO: False
+        time: 1  # run indivudal batch in time
+        space: None  # to be implemented
+    extent: # [29, 28, 85, 86]
+    CPU_cores: 8
+    climate: era5
+    
+climate:
+    era5:
+        path: inputs/climate/
+        product: reanalysis
+        timestep: 1H
+        plevels: [350,400,450,500,550,600,650,700,750,775,800,825, 850, 875, 900, 925, 950]
+        download_threads: 17
+        realtime: False
+    precip_lapse_rate: False
+
+dem:
+    file: langtangish_dem_32645_clip2.tif
+    epsg: 32645 # himalaya 
+    horizon_increments: 10
+
+sampling:
+    method: toposub
+    points:
+        csv_file: # station_list.csv
+
+    toposub:
+        clustering_method: minibatchkmean
+        n_clusters: 10
+        random_seed: 2
+        clustering_features: {'x':1, 'y':1, 'elevation':4, 'slope':1, 'aspect_cos':1, 'aspect_sin':1, 'svf':1} # this is the weight for the features 
+
+toposcale:
+    interpolation_method: idw
+    pt_sampling_method: nearest
+    LW_terrain_contribution: True
+
+outputs:
+    directory: outputs # change the names of the folders 
+    variables: all  # list or combination name
+    file:
+        clean_outputs: True #if you change the DEM - !! TRUE
+        clean_FSM: True
+        df_centroids: df_centroids.pck
+        ds_param: ds_param.nc
+        ds_solar: ds_solar.nc
+        da_horizon: da_horizon.nc
+        landform: landform.tif
+        downscaled_pt: down_pt_*.nc
+clean_up:
+    delete_tmp_dirs: True

@@ -1,0 +1,37 @@
+// Get the image collection
+var l5_composite = ee.ImageCollection('LANDSAT/LT05/C02/T1_L2')
+                  .filterDate('2000-10-01', '2000-10-30')
+                  .filterBounds(geometry)
+                  .filter(ee.Filter.lt('CLOUD_COVER_LAND', 10))
+                  .median()
+                  .clip(geometry);
+
+// Rename bands to standard Landsat 5 names
+var l5_composite = l5_composite.select(['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B7']);
+
+// NDVI calculation
+var ndvi = l5_composite.normalizedDifference(['SR_B4', 'SR_B3']).rename('NDVI');
+
+// Add the Landsat 5 composite to the map
+var visParams = {
+  bands: ['SR_B4', 'SR_B3', 'SR_B2'],
+  min: 0,
+  max: 3000,
+  gamma: 1.4,
+};
+Map.addLayer(l5_composite, visParams, 'L5 Composite');
+
+// Add NDVI layer to the map
+Map.addLayer(ndvi, {min: -1, max: 1, palette: ['blue', 'white', 'green']}, 'NDVI');
+
+// Export the data to Drive as TIF
+Export.image.toDrive({
+  image: ndvi,
+  description: 'langtang_1984_2013_L5_NDVI',
+  folder: 'langtang',
+  scale: 30,
+  region: geometry,
+  fileDimensions: 7680,
+  maxPixels: 10e11,
+  crs: 'EPSG:32643'
+});
