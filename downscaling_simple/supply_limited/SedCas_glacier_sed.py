@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Feb  3 16:07:40 2022
-Edited on 5 March 2024 by varyabazilova 
+Edited on 10 Apr 2024 by varyabazilova 
 
 @author: hirschbe
 """
@@ -179,6 +179,8 @@ class SedCas():
         for q in quants:
             c = 'Q%i'%q
             sedout[c] = np.percentile(self.sed.so, q, axis=1)
+
+        sedout['dfs'] = self.sed.dfs
 
         sedout['sc'] = self.sed.sc # channel sediment storage at every time step
         sedout['ls'] = self.sed.ls # landslides
