@@ -981,7 +981,9 @@ def sedcas(Lls, Sls, hyd, qdf, smax, rhc, shcap, area, method, LStrig, Tpr, shin
         if Qmin_nodf < 0:
             Qmin_nodf = 0
         a = smax_nodf * qdf / ((qdf-Qmin_nodf)**b*(1-smax_nodf))
-    
+    elif method == 'off':
+        Qmin_nodf = qdf
+
     # landslides (ls) are daily, needs to be padded
     freq = q.index[1] - q.index[0]             # desired frequency
     delta = pd.to_timedelta('1 day') - freq
@@ -1095,7 +1097,7 @@ def sedcas(Lls, Sls, hyd, qdf, smax, rhc, shcap, area, method, LStrig, Tpr, shin
             if q[i] >= qdf:
                 sopot[i] = smax/(1-smax) * q[i]# - qdf)         # potential sediment output
             
-        if method == 'exp':
+        else:
             if (q[i] < qdf) and (q[i] >= Qmin_nodf):
                 sopot[i] = a * (q[i] - Qmin_nodf) ** b                        # exponential function for small flows
             elif q[i] >= qdf:

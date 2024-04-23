@@ -22,7 +22,7 @@ smax: 	 		0.57
 smax_nodf: 	 	0.4
 a: 	 			auto
 b: 	 			1.5
-Qmin_nondf: 	auto
+Qmin_nodf: 	'off'
 rhc: 	 		0.12
 minDF: 	 		2000
 rho_b:   		2600
@@ -33,7 +33,7 @@ ls_xmin:		233
 ls_alpha:		1.69
 ls_cutoff:		3*10**6
 M: 				1
-sediment_input:		1337.55
+sediment_input:		858
 
 
 Description
@@ -60,7 +60,7 @@ smax 	>>>	 max volumetric ratio of sediment to water [mm/mm], typically <= 0.8
 smax_nodf 	>>>	 max possible volumetric sediment concentration for bedload transport (for sub-critical flows) [mm/mm], typically <= 0.4 
 a 	>>>	 Scaling parameter for bedload transport in sub-critical flow conditions, determined automatically
 b 	>>>	 Shape parameter for bedload transport in sub-critical flow conditions, typically =1.5
-Qmin_nodf 	>>>	 min discharge for bedload transport initiation, determined automatically
+Qmin_nodf 	>>>	discharge threshold for bedload transport to be determined automatically ('exp') or turned off ['exp','off']
 rhc 	>>>	 Deposition rate from hillslope to channel, i.e. fraction of landslide going into hillslope storage and 1-rhc is the fraction going into the channel storage.
 minDF 	>>>	 min (measured) debris-flow volume (water + sediment) [m3]
 rho_b 	>>>  bedrock density [kg/m3]
