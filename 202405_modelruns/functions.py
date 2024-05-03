@@ -80,3 +80,23 @@ def magnitude_frequency(sediments_area, column):
     sediments_sorted["return_period"] = (1 / sediments_sorted["prob"])
 
     return sediments_sorted
+
+def add_elevation(elevation, df):
+    ''' add elevation to the mean monthly data'''
+    df = df.transpose()
+    df = df.reset_index()
+    df = df.rename(columns ={'index':'cellnr2'})
+    merged = df.merge(elevation, on = 'cellnr2')
+    return merged 
+
+
+def data_for_boxplots_sorted(df, variable, sort_param):
+    '''
+    create a melted dataframe for boxplots
+    df = dataframe 
+    variebls = str(variable of interest)
+    sort_params = str(how to sort)
+    '''
+    df = df.sort_values(sort_param)
+    melted_df = pd.melt(df, id_vars=['cellnr2', 'band_data'], var_name='month', value_name= variable)
+    return melted_df
