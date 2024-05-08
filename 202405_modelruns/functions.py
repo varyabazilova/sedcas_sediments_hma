@@ -16,6 +16,7 @@ cf = (area * 10**6) * 10**-3  # km2 to m2 and mm to m
 
 # functions
 
+# sum per month, mean across years 
 def calculate_monthly_sediment_yield(sediments):    
     ''' the output is in m3'''
     # Create DataFrame for sediments with area considered
@@ -37,6 +38,36 @@ def calculate_monthly_sediment_yield(sediments):
     symm_month = sym.groupby(by=sym.index.month).mean().reset_index()
 
     return symm_month
+
+#  sum per month
+def calculate_monthly_sediment_yield_all(sediments):    
+    ''' the output is in m3'''
+    # Create DataFrame for sediments with area considered
+    sediments_area = pd.DataFrame()
+    sediments_area['D'] = pd.to_datetime(sediments.D)
+    sediments_area['Q100'] = sediments.Q100 * 4830.0
+    # sediments_area['dfs'] = sediments.dfs * 4830.0
+
+    # sediments_area['Qstl'] = sediments.Qstl * 4830.0
+    # sediments_area['Qdftl'] = sediments.Qdftl * 4830.0
+
+    # reset index to date
+    sediments_area = sediments_area.set_index('D')
+
+    # Resample to monthly and calculate sum
+    sym = sediments_area.resample('m').sum()
+    sym = sym.reset_index()
+    sym['year'] = sym['D'].dt.year
+    sym['month'] = sym['D'].dt.month
+
+    # Calculate monthly sediment yield mean
+    # symm_month = sym.groupby(by=sym.index.month).mean().reset_index()
+
+    return sym
+
+
+
+
 
 def convert_units_to_volume(sediments):
     # Create DataFrame for sediments with area considered
