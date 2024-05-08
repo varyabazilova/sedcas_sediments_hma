@@ -5,6 +5,10 @@
 # libraries
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
+import os
+
+
 
 
 
@@ -40,16 +44,19 @@ def calculate_monthly_sediment_yield(sediments):
     return symm_month
 
 #  sum per month
-def calculate_monthly_sediment_yield_all(sediments):    
+def calculate_monthly_sediment_yield_all(sediments, column):    
     ''' the output is in m3'''
     # Create DataFrame for sediments with area considered
     sediments_area = pd.DataFrame()
     sediments_area['D'] = pd.to_datetime(sediments.D)
-    sediments_area['Q100'] = sediments.Q100 * 4830.0
-    # sediments_area['dfs'] = sediments.dfs * 4830.0
-
-    # sediments_area['Qstl'] = sediments.Qstl * 4830.0
-    # sediments_area['Qdftl'] = sediments.Qdftl * 4830.0
+    if column == 'Q100':
+        sediments_area['Q100'] = sediments.Q100 * 4830.0
+    if column == 'dfs':
+        sediments_area['dfs'] = sediments.dfs * 4830.0
+    if column == 'Qstl':
+        sediments_area['Qstl'] = sediments.Qstl * 4830.0
+    if column == 'Qdftl':
+        sediments_area['Qdftl'] = sediments.Qdftl * 4830.0
 
     # reset index to date
     sediments_area = sediments_area.set_index('D')
@@ -112,6 +119,61 @@ def magnitude_frequency(sediments_area, column):
 
     return sediments_sorted
 
+
+def melted_df_for_boxplots_monthly(elevation_df, monthly_data, timestep_df, land_cover, column):
+    '''
+    df: dataframe with model output
+    elevation: elevation table with cellnr2 and elevation/band_data 
+    timestep_df: df with index, year and month number
+    land_cover: string with land cover type
+    column: column of interest from the output data
+    '''
+    elevation = elevation_df.transpose()
+    elevation_list = elevation.loc['cellnr2'].tolist()
+    # make columns in the correct order 
+    monthly_data = monthly_data[elevation_list]
+    # make sure its the same 
+    # if elevation_list == df.columns.tolist():
+    #     continie 
+    # else: print('columns fo not match!') 
+      # rename columns according the the elevation and merge with timestep 
+    monthly_data.columns = elevation.loc['band_data']
+    df = pd.concat([timestep_df, monthly_data],axis=1)
+    df['land_cover'] = land_cover
+    # melt table 
+    melted = pd.melt(df, id_vars=['year', 'month', 'land_cover'], var_name='elevation', value_name=column)
+    return melted
+
+
+def melted_df_for_boxplots_monthly_mean(elevation, monthly_mean, land_cover, column):
+    '''
+    df: dataframe with model output
+    elevation: elevation table with cellnr2 and elevation/band_data 
+    land_cover: string with land cover type
+    column: column of interest from the output data
+    '''
+    elevation = elevation.transpose()
+    elevation_list = elevation.loc['cellnr2'].tolist()
+    # make columns in the correct order 
+    monthly_mean = monthly_mean[elevation_list]
+    # rename columns 
+    monthly_mean.columns = elevation.loc['band_data']
+    # adjust month 
+    monthly_mean['month'] = monthly_mean.index.values + 1
+    monthly_mean['land_cover'] = land_cover
+    # melt table 
+    melted = pd.melt(monthly_mean, id_vars=['month', 'land_cover'], var_name='elevation', value_name=column)
+    return melted
+
+
+
+
+
+
+
+
+
+# archive functions -? 
 def add_elevation(elevation, df):
     ''' add elevation to the mean monthly data'''
     df = df.transpose()
