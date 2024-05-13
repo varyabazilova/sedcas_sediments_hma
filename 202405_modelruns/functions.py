@@ -166,6 +166,26 @@ def melted_df_for_boxplots_monthly_mean(elevation, monthly_mean, land_cover, col
     return melted
 
 
+def bin_elevation(row):
+    ''' function to create elevation bins''' 
+    if row['elevation'] <2500:
+        return '<2500'
+    elif 2500 <= row['elevation'] < 3000:
+        return '2500 - 3000'
+    elif 3000 <= row['elevation'] < 3500:
+        return '3000 - 3500'
+    elif 3500 <= row['elevation'] < 4000:
+        return '3500 - 4000'
+    elif 4000 <= row['elevation'] < 4500:
+        return '4000 - 4500'
+    elif 4500 <= row['elevation'] < 5000:
+        return '4500 - 5000'
+    elif 5000 <= row['elevation'] < 5500:
+        return '5000 - 5500'
+    elif 5500 <= row['elevation'] < 6000:
+        return '5500 - 6000'
+    elif 6000 <= row['elevation'] :
+        return '>6000'
 
 
 
@@ -173,7 +193,7 @@ def melted_df_for_boxplots_monthly_mean(elevation, monthly_mean, land_cover, col
 
 
 
-# archive functions -? 
+# ------- archive functions -? 
 def add_elevation(elevation, df):
     ''' add elevation to the mean monthly data'''
     df = df.transpose()
