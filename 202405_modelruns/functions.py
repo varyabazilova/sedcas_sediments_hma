@@ -166,7 +166,7 @@ def melted_df_for_boxplots_monthly_mean(elevation, monthly_mean, land_cover, col
     return melted
 
 
-def bin_elevation(row):
+def bin_elevation500(row):
     ''' function to create elevation bins''' 
     if row['elevation'] <2500:
         return '<2500'
@@ -188,6 +188,58 @@ def bin_elevation(row):
         return '>6000'
 
 
+def bin_elevation200(row):
+    elevation = row['elevation']
+    if elevation < 1400:
+        return '<1400'
+    elif 1400 <= elevation < 1600:
+        return '1400 - 1599'
+    elif 1600 <= elevation < 1800:
+        return '1600 - 1799'
+    elif 1800 <= elevation < 2000:
+        return '1800 - 1999'
+    elif 2000 <= elevation < 2200:
+        return '2000 - 2199'
+    elif 2200 <= elevation < 2400:
+        return '2200 - 2399'
+    elif 2400 <= elevation < 2600:
+        return '2400 - 2599'
+    elif 2600 <= elevation < 2800:
+        return '2600 - 2799'
+    elif 2800 <= elevation < 3000:
+        return '2800 - 2999'
+    elif 3000 <= elevation < 3200:
+        return '3000 - 3199'
+    elif 3200 <= elevation < 3400:
+        return '3200 - 3399'
+    elif 3400 <= elevation < 3600:
+        return '3400 - 3599'
+    elif 3600 <= elevation < 3800:
+        return '3600 - 3799'
+    elif 3800 <= elevation < 4000:
+        return '3800 - 3999'
+    elif 4000 <= elevation < 4200:
+        return '4000 - 4199'
+    elif 4200 <= elevation < 4400:
+        return '4200 - 4399'
+    elif 4400 <= elevation < 4600:
+        return '4400 - 4599'
+    elif 4600 <= elevation < 4800:
+        return '4600 - 4799'
+    elif 4800 <= elevation < 5000:
+        return '4800 - 4999'
+    elif 5000 <= elevation < 5200:
+        return '5000 - 5199'
+    elif 5200 <= elevation < 5400:
+        return '5200 - 5399'
+    elif 5400 <= elevation < 5600:
+        return '5400 - 5599'
+    elif 5600 <= elevation < 5800:
+        return '5600 - 5799'
+    elif 5800 <= elevation < 6000:
+        return '5800 - 5999'
+    elif 6000 <= elevation:
+        return '>=6000'
 
 
 
