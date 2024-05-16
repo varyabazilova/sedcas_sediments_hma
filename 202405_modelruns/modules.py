@@ -832,9 +832,7 @@ def large_ls_fixed_increase(T, sediment_input, area=10. ** 6):
 
     return lrgls
 
-
 # new small landslides: make it so that there is no small landslides happenning
-
 
 def zeros_time_series(t):
     s_ls = np.zeros(t)
@@ -845,7 +843,37 @@ def zeros_time_series(t):
     return sls
 
 
+# def large_ls_once_per_year(T, annual_sediment_input, area=10. ** 6):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ------ end ---------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -72,6 +72,31 @@ def calculate_monthly_sediment_yield_all(sediments, column):
 
     return sym
 
+# count dfs per month
+def count_dfs_per_month(sediments, column):
+    sediments['D'] = pd.to_datetime(sediments.D)
+    sediments = sediments.set_index('D')
+    sediments = sediments[sediments[column] > 0]
+    sediments['count'] = sediments[column].apply(lambda x: 1 if x != 0 else 0)
+    
+    sym = sediments.resample('m').sum()
+    # Calculate monthly sediment yield mean
+    totalcount_month = sym.groupby(by=sym.index.month).mean().reset_index()
+
+    return totalcount_month
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
