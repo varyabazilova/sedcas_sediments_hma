@@ -843,18 +843,44 @@ def zeros_time_series(t):
     return sls
 
 
+# ---------------------------------------------------------------- 
+
+# ------------------ NEW INPUT ----------- 
 # def large_ls_once_per_year(T, annual_sediment_input, area=10. ** 6):
 
 
+def generate_large_landslides_once(T, sediment_input, day_of_year, area=10.**6):
+    # Resample T to daily mean
+    T_day = T.resample('24H').mean()
+    idx = T_day.index
+    
+    # Create an array to hold the magnitudes with zeros
+    mags = np.zeros(len(T_day))
+    
+    # Assign the sediment input to the specified day of the year
+    for i, date in enumerate(T_day.index):
+        if date.dayofyear == day_of_year:
+            mags[i] = sediment_input
+    
+    # Convert magnitudes from m3 to mm
+    lrg_ls = mags / area * 10. ** -3
+    
+    # Create the DataFrame with the computed magnitudes
+    data = {'mag': lrg_ls}
+    lrgls = pd.DataFrame(data, index=idx)
 
+    return lrgls
 
+# Function to generate a time series with no small landslides
+def zeros_time_series(t):
+    s_ls = np.zeros(t)
 
+    data = {'mag': s_ls}
+    sls = pd.DataFrame(data=data)
 
+    return sls
 
-
-
-
-
+# ---------------------------------------------------------------- 
 
 
 
