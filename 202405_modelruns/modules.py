@@ -846,7 +846,6 @@ def zeros_time_series(t):
 # ---------------------------------------------------------------- 
 
 # ------------------ NEW INPUT ----------- 
-# def large_ls_once_per_year(T, annual_sediment_input, area=10. ** 6):
 
 
 def generate_large_landslides_once(T, sediment_input, day_of_year, area=10.**6):
