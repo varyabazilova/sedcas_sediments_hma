@@ -267,6 +267,34 @@ def bin_elevation200(row):
         return '>=6000'
 
 
+def annual_sum_mean(df):
+    df['D'] = pd.to_datetime(df['D'])
+    df['Year'] = df['D'].dt.year
+    annual_sum = df.groupby('Year').sum()
+    annual_mean_Qstl = annual_sum.Qstl.mean()
+    return annual_mean_Qstl
+
+
+def annual_sum_percentile(df, percentile):
+    df['D'] = pd.to_datetime(df['D'])
+    df['Year'] = df['D'].dt.year
+    annual_sum = df.groupby('Year').sum()
+    annual_percentile_Qstl = annual_sum.Qstl.quantile(percentile / 100)
+    return annual_percentile_Qstl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
