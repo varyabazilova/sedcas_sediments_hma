@@ -72,18 +72,54 @@ def calculate_monthly_sediment_yield_all(sediments, column):
 
     return sym
 
-# count dfs per month
-def count_dfs_per_month(sediments, column):
+
+def count_dfs_per_time(sediments, column, freq):
+    '''
+    sediments - sediment output file
+    column - column of interest (e.g. dfs)
+    freq - resampling frequency
+    '''
+
     sediments['D'] = pd.to_datetime(sediments.D)
     sediments = sediments.set_index('D')
     sediments = sediments[sediments[column] > 0]
     sediments['count'] = sediments[column].apply(lambda x: 1 if x != 0 else 0)
-    
-    sym = sediments.resample('m').sum()
-    # Calculate monthly sediment yield mean
-    totalcount_month = sym.groupby(by=sym.index.month).mean().reset_index()
 
-    return totalcount_month
+    
+    if freq == 'month':
+        # calculate how many dfs are there per month 
+        sym = sediments.resample('m').sum()
+        return sym
+    
+    elif freq == 'year':
+        # calculate how many dfs are there per year 
+        sym_year = sediments.resample('Y').sum()
+        return sym_year
+
+
+def add_elevation_to_df_count(df_count, elevation):
+    '''
+    df_count - df with count of dfs per given time
+    elevation - df with elevation values per cell id 
+    '''
+    elevation = elevation.transpose()
+    elevation_list = elevation.loc['cellnr2'].tolist()
+    
+    # reorder columns of the df count 
+    df_count = df_count[elevation_list]
+    # check if they are the same
+    if elevation_list == df_count.columns.tolist():
+        print("default land cover. monthly data: same")
+    else:
+        print("not the same")
+    # rename columns 
+    df_count.columns = elevation.loc['band_data']
+    df_count = df_count.reset_index()
+    df_count['D'] = df_count.D.dt.year
+    return df_count
+
+
+
 
 
 
