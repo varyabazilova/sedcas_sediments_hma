@@ -97,7 +97,7 @@ def count_dfs_per_time(sediments, column, freq):
         return sym_year
 
 
-def add_elevation_to_df_count(df_count, elevation):
+def add_elevation_to_df_count(df_count, elevation, freq):
     '''
     df_count - df with count of dfs per given time
     elevation - df with elevation values per cell id 
@@ -115,7 +115,13 @@ def add_elevation_to_df_count(df_count, elevation):
     # rename columns 
     df_count.columns = elevation.loc['band_data']
     df_count = df_count.reset_index()
-    df_count['D'] = df_count.D.dt.year
+
+    if freq == 'year':
+        df_count['D'] = df_count.D.dt.year
+    if freq == 'month':
+        df_count['D_year'] = df_count.D.dt.year
+        df_count['D_month'] = df_count.D.dt.month
+    
     return df_count
 
 
