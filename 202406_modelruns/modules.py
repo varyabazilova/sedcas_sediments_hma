@@ -1180,7 +1180,8 @@ def sedcas(Lls, Sls, hyd, qdf, smax, rhc, shcap, area, method, LStrig, Tpr, shin
             q2 = q.copy()
             q2[q2==0] = np.nan
             conc = s/(s+q2)             # volumetric sediment concentration in flow
-            cond1 = s >= mindf         # first condition, sediment output must be greater than the minimum possibld DF
+            conc[np.isnan(conc)] = 0   # where the concentration is nan -> replace by 0s 
+            cond1 = s >= mindf          # first condition, sediment output must be greater than the minimum possibld DF
             cond2 = conc > smax_nodf    # second condition, the sediment concentration must be greater than for fluvial transport
             dfs = s[cond1 & cond2]
             idxdfs = idx[cond1 & cond2]

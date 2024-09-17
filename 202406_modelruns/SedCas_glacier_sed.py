@@ -126,8 +126,15 @@ class SedCas():
         sed.so = np.zeros([n, self.M])                                 # sediment catchment output [mm]
         sed.sopot = np.zeros([n, self.M])                              # potential sediment catchment output [mm], i.e. transport-limited case
         sed.dfs = np.zeros([n, self.M])                                # debris flows, from 'so' values above threshold and summed consecutive values
-        sed.dfspot = np.zeros(n)                                       # debris flows potential (only 1 because only 1 climate)
-        
+        sed.dfspot = np.zeros([n, self.M])                                       # debris flows potential (only 1 because only 1 climate)
+
+        # NEW THINGS
+        sed.concpot = np.zeros([n, self.M])
+        sed.conc = np.zeros([n, self.M])
+
+
+
+
         # sediment module with stochastic landslide magnitudes
         print('running sediment module...', sep='\n', end='\n')
         seed = 0
@@ -163,8 +170,17 @@ class SedCas():
             sed.so[:,m] = sed_run.so
             sed.sopot[:,m] = sed_run.sopot
             sed.dfs[:,m] = sed_run.dfs
+            
+
+
+            # NEW TEST 
+            sed.dfspot[:,m] = sed_run.dfspot
+            sed.conc[:,m] = sed_run.conc.values
+            sed.concpot[:,m] = sed_run.concpot
+
+
             seed += 1
-        sed.dfspot[:] = sed_run.dfspot
+        sed.dfspot[:,m] = sed_run.dfspot
             
         self.sed = sed
             
@@ -182,6 +198,15 @@ class SedCas():
             sedout[c] = np.percentile(self.sed.so, q, axis=1)
 
         sedout['dfs'] = self.sed.dfs
+        sedout['so'] = self.sed.so
+        sedout['sopot'] = self.sed.sopot
+
+        # NEW THINGS TEST
+        sedout['dfspot'] = self.sed.dfspot
+        sedout['conc'] = self.sed.conc
+        sedout['concpot'] = self.sed.concpot
+
+
 
         sedout['sc'] = self.sed.sc # channel sediment storage at every time step
         sedout['ls'] = self.sed.ls # landslides
