@@ -149,8 +149,8 @@ class SedCas():
 
             # lrgls = mod.large_ls(self.Ta, self.Pr, self.hydro.snow, self.Tsd, self.Tpr, self.Tsa, self.ls_xmin, self.ls_alpha, self.ls_cutoff, self.Tfreeze, self.LStrig, self.area, seed=seed)                # large landslided
             # fixed increase in the landslided
-            # lrgls = mod.large_ls_fixed_increase(T=self.Ta, area=self.area, sediment_input=self.sediment_input)
-            lrgls = mod.generate_large_landslides_once(T=self.Ta, area=self.area, day_of_year = 1, sediment_input=self.sediment_input*365)
+            lrgls = mod.large_ls_fixed_increase(T=self.Ta, area=self.area, sediment_input=self.sediment_input)
+            # lrgls = mod.generate_large_landslides_once(T=self.Ta, area=self.area, day_of_year = 1, sediment_input=self.sediment_input*365)
 
             N = len(lrgls[lrgls.mag > 0])
             # sls = mod.small_ls(n_days, N, self.ls_xmin, self.area, seed=seed)                         # small landslides
