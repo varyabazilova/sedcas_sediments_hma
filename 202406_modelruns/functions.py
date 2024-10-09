@@ -127,6 +127,11 @@ def add_elevation_to_df_count(df_count, elevation, freq):
 
 
 
+def calculate_percent_of_potential(sediments):
+    sediments['dfs_percent']  = (sediments.dfs * 100) / sediments.dfspot
+    sediments['so_percent']   = (sediments.so * 100) / sediments.sopot
+    sediments['conc_percent'] = (sediments.conc * 100) / sediments.concpot
+    return sediments 
 
 
 
