@@ -241,7 +241,7 @@ def melted_df_for_boxplots_monthly_mean(elevation, monthly_mean, land_cover, col
 def bin_elevation500(row):
     ''' function to create elevation bins''' 
     if row['elevation'] <2500:
-        return '<2500'
+        return '2500'
     elif 2500 <= row['elevation'] < 3000:
         return '2500 - 3000'
     elif 3000 <= row['elevation'] < 3500:
@@ -257,7 +257,7 @@ def bin_elevation500(row):
     elif 5500 <= row['elevation'] < 6000:
         return '5500 - 6000'
     elif 6000 <= row['elevation'] :
-        return '>6000'
+        return '6000'
 
 
 def bin_elevation200(row):
