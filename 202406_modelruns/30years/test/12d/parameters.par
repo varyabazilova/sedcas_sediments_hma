@@ -12,7 +12,7 @@ area: 	 		4.83
 Tsa: 	 		0.6
 Tsm: 	 		0.5
 mrate: 	 		0.08
-mrate_ice:0.45
+mrate_ice:0.10400000000000001
 alphaET: 	 	20.0
 LStrig:			'thermal'
 Tpr:			7.9
@@ -34,7 +34,7 @@ ls_xmin:		233
 ls_alpha:		1.69
 ls_cutoff:		3*10**6
 M: 				1
-sediment_input:17707.273130838297
+sediment_input:1
 
 
 Description

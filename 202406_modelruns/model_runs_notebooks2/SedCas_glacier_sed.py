@@ -71,7 +71,7 @@ class SedCas():
                         
             # glacier HRU:
             if self.HRUs[i] == 'glacier':
-                g = mod.degree_day_model(self.Ta.copy(), self.Pr.copy(), self.mrate_ice, self.Tsa, self.Tsm, s0=10000000, Asnow = self.Asnow[i], Asoil = self.Anosnow[i])
+                g = mod.degree_day_model(self.Ta.copy(), self.Pr.copy(), self.mrate_ice, self.Tsa, self.Tsm, s0=1000000000000000000000000000000000000000000000000000000000000000000, Asnow = self.Asnow[i], Asoil = self.Anosnow[i])
                 glacier.append(g) 
 
                 # glacier should only melt once the snow is gone:

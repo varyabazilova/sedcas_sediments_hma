@@ -4,7 +4,7 @@ n_HRU: 	 		3
 HRUs: 	 		['forest', 'bedrock', 'glacier']
 Vwcaps: 		[[72,27], [4], [1]]
 ks: 	 		[[94, 235], [23], [1]]
-shares:[0.4, 0.4, 0.2]
+shares:[0, 0, 1]
 Asnow:			[0.4, 0.65, 0.65]
 Anosnow:		[0.15, 0.25, 0.5]
 Ele: 	 		1600
@@ -12,7 +12,7 @@ area: 	 		4.83
 Tsa: 	 		0.6
 Tsm: 	 		0.5
 mrate: 	 		0.08
-mrate_ice:0.10400000000000001
+mrate_ice:0.30
 alphaET: 	 	20.0
 LStrig:			'thermal'
 Tpr:			7.9
