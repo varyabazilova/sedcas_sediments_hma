@@ -1,0 +1,125 @@
+!DATASET DESCRIPTION
+Name: Kyanyjin
+Description: AWS data (ICIMOD)
+Project Name: Cryosphere Monitoring Project (CMP)
+Contact person: ICIMOD/UU
+Email: j.f.steiner@uu.nl,tika.gurung@icimod.org
+Accesibility: ICIMOD (International Centre for Integrated Mountain Development)/UU (Utrecht University)/DHM (Department of Hydrology and Meteorology)/KU (Kathmandu University)
+Publication status: unpublished
+Remarks:
+-All partners have full access to all meteorological and hydrological data in processed and raw format. 
+-In collecting, acquiring, managing, and sharing data, CMP partners respect and abide by the related international and national laws, third party intellectual property rights, confidentiality obligations, and contractual terms and conditions of use as imposed by the provider of the data.
+-Users will acknowledge CMP when using the data in reports or publications: "The data have been collected under the Cryosphere Monitoring Programme (CMP) jointly by ICIMOD, the Department of Hydrology an Meteorology and Kathmandu University, Nepal, in collaboration with the University of Utrecht, the Netherlands."
+-Should any of the partners wish to use the data for scientific publications, contribution to the manuscript/ data analysis and co-authorship shall be discussed with the other partners. 
+-CMP does not guarantee the quality, accuracy or veracity of the data, and data are shared on an ‘as is’ basis. CMP partners will not be responsible for errors or omissions in the data. (Reference: ICIMOD Data Policy). However, CMP partners endeavor to ensure that only high-quality data are shared and disseminated.
+-CMP will not be held liable for the consequences arising out of improper or incorrect use of the data.
+-Third party sharing of unpublished data should be agreed with CMP partners and other data owners. The permission to use the data shall not be considered the waiver of copyright or proprietary right of CMP and other data owners, wherever applicable.
+Station data under CMP 
+-Kyanging AWS
+-Yala Base Camp AWS
+-Langtang Khola HS
+-Lirung Khola HS
+-Langtang Khola discharge data
+-Lirung Khola discharge data
+The AWS was installed in 2012 but almost completely destroyed in the April Gorkha earthquake (25th April 2015). 
+In October 2015 the station was reinstalled with new sensors. 
+
+SENSORS FROM 2012 TO 2015
+RTS datalogger
+Rotronic Hydroclip HC2 Temperature and Humidity Sensor with Radiation Shield #60834202 (March 2012 - May 2015)
+Young Wind Monitor 05103L-45 Ultrasonic Anemometer #115881 (March 2012 - May 2015) 
+CNR4 Net radiometer #110715 (March 2012 - May 2015)
+Vaisala PTB330 Digital Barometer #G4930010
+OTT Pluvio  Precipitation Gauge #293816
+Jenoptik  SHM30 Snow Depth Sensor #112914
+sensor heights not recorded - instruments fixed at around 2 m (Shea et al. 2015)
+Several data gaps then totally empty dataset in the weeks before the earthquake
+
+SENSORS & EQUIPMENT FROM 2015 (2015-10-24 16:00) UNTIL NOW:
+Campbell CR1000 data logger #73130
+Phocos charge controler, 10 Amp 12V PWM until 2018/04/19
+New Phocos charge controler, 10 Amp 12 V PWM from 2018-04-20 (same type as before but new)
+Sealed 12V 72Ah battery since 2017-10-19
+Kipp and Zonen CNR4 #150623, mounted at 2.31m on 2015-10-19
+Young anemometer 05103 #?, mounted at 3.30m on 2015-10-19
+Thermometer/Hygrometer HC2S3 #61117434, mounted at 1.90m on 2015-10-19, in place until until 2018/04/23
+Thermometer/Hygrometer HC2S3 #61459067, mounted at 1.90m on 2018-04-23
+Sounding Height Ranger SR50A #6837, mounted at 2.16m on 2015-10-19, new transducer head of model C2258 installed #C11007 2017-10-19 until 2018-04-19
+Sounding Height Ranger SR50A #6934 (repaired by Campbell), mounted at 2.16m on 2018-04-19
+Pressure sensor CS106 #2340509, mounted inside datalogger box on 2015-10-19
+Weighting pluviometer OTT Pluvio2, #293816, re-mounted at 1.90m on 2015-10-19
+
+Pluvio stopped functionning from 2016 18th October, probably due to a wrong manipulation during the visit. Reactivated on 20th of April 2017 with the whole station.  
+Full datagap between 4th January 2017 and 20th of April 2017 because of battery issue. Solved on 20th of April 2017.
+Full datagap between 26th June 2017 and 18th October 2017 due to a faulty solar power cable. Solved on 18th October 2017 with the same power cable. 
+Full datagap between 19th March 2018 and 19th April 2018, likely due to a brittle solar power cable. Solved on 19th April and 20th April 2018 but changing the charge controler, internal wires to battery and internal wires within solar panel cable. 
+Full datagap between 16th of November 2019 and 25th of March 2020 as data was overwriting when the station was not visited in 2020 due to COVID.
+RH data from 2018 onwards look different to before, i.e. the new hygrometer obviously works differently. The sensor fails after 2019-07-15.
+The RHCOR column was introduced in 2015 as the original sensor was capped at 80%. Between 2014-01-01 until 2014-04-30, the RHCOR value is to be used. Elsewhere the RH column is correct throughout.
+
+DATA PROCESSING (DATA FROM OCTOBER 2015 TO MAY 2019):
+Raw data was summarized for every hour, either taking the mean, max or sum of 10 minute time series. 
+e.g. for 16h the hourly sum, mean, max were calculated from measurements stored at 15:10, 15:20, 15:30, 15:40, 15:50 and 16:00
+For reproducibility the code is available at https://github.com/fidelsteiner/BasicCode/tree/master/AWSprocessing 
+and https://github.com/fidelsteiner/BasicCode/tree/master/timeseriesAnalysis for the hourly aggregation. The data was reprocessed with the new
+code from May 2019 onwards, hence small differences in the numbers behind the comma exist until everything is reprocessed to the same format.
+Max windspeed if also provided since May 2019.
+
+Prior to summarizing the data, the following quality checks were performed: 
+- shortwave radiation values larger than 2000 were replaced with NAs. 
+- negative wind speed and winddirection values were replaced with NAs. 
+- 0 values of RH were replaced with NAs and values larger than 100 with 100. 
+- 0 values of pluvio bucket content time series were replaced with NAs.
+- 0 snow depth values were replaced by NAs.
+
+the wind direction was calculated from the wind vectors u and v (southerlies and westerlies): 
+u   =-wind_speed*sin(wind_dir*pi/180)
+v   =-wind_speed*cos(wind_dir*pi/180)
+meanu = hourly mean (u)
+meanv = hourly mean (v)
+
+if meanu >0, then
+windvec = (90-180/pi*atan(meanv/meanu)+180)
+if meanu <0, then
+windvec = (90-180/pi*atan(meanv/meanu))
+
+SR50 ground distance processing: 
+- ground distance values larger than the max possible distance to the ground (2.2m) were replaced by NAs.
+- best quality value within 10 consecutive measurements made each hour was selected.
+- measurement quality values of 0 or above 210 were replaced by NAs.
+
+New processing code used for aggregating the data from 2022 onward:
+- Written by Philip Kraaijenbrink, completely based on previous code written by Jakob Steiner
+- Includes automatic appending of data and checking (and filling) time gaps
+- Available at https://github.com/mountainhydrology/data-sorting
+- Fixed date stamps from US format to POSIX format
+
+
+!DATASET PROPERTIES	
+Latitude: 28.21102
+Longitude: 85.56717
+Altitude: 3862
+Start date: 2012-01-01
+End date: 2023-11-06
+Timestep: 1 hour
+No Data value: NA
+
+!PARAMETERS
+BVOL, battery voltage, V	
+PVOL, OTT pluvio 2, measured instantaneous precipitation, mm	
+BCON, OTT pluvio 2, mean bucket content, mm
+TAIR, Mean air temperature, degrees Celsius
+RH, Mean air relative humidity, %
+RHCOR, Mean corrected air relative humidity (before it was changed to a Campbel data logger; see comments above), %
+TCNR4, Mean CNR4 inside temperature, degrees Celsius
+KINC, Mean incoming shortwave radiation CNR4, W/m2
+KUPW, Mean outgoing shortwave radiation CNR4, W/m2
+LINC, Mean corrected incoming longwave radiation CNR4, W/m2
+LUPW, Mean corrected outgoing longwave radiation CNR4, W/m2
+TSOIL, Mean soil temperature, degrees Celsius
+LSD, Mean Laser ground distance, m
+PRES, Mean atmospheric pressure, mbar	
+WSPD, Mean wind speed, m/s
+WSPDmax, Max wind speed, m/s
+WINDDIR, Vector mean wind direction, degrees
+SR50, Best quality measurement per hour distance to the ground of the SR50A sensor, m
