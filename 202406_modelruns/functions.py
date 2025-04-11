@@ -82,7 +82,7 @@ def count_dfs_per_time(sediments, column, freq):
 
     sediments['D'] = pd.to_datetime(sediments.D)
     sediments = sediments.set_index('D')
-    sediments = sediments[sediments[column] > 0]
+    # sediments = sediments[sediments[column] > 0]
     sediments['count'] = sediments[column].apply(lambda x: 1 if x != 0 else 0)
 
     
