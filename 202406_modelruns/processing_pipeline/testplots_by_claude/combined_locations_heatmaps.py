@@ -146,7 +146,7 @@ def create_combined_heatmaps_plot(langtang_data, mustang_data, global_vmin, glob
             data,
             annot=True,
             # cmap=cmc.managua,
-            cmap = 'coolwarm',
+            cmap = 'RdBu_r',
             center=100,
             ax=ax,
             cbar=False,
@@ -161,8 +161,14 @@ def create_combined_heatmaps_plot(langtang_data, mustang_data, global_vmin, glob
         
         # Labels and formatting
         landcover_num = col.split('_')[0][-1]  # Extract number from 'Qstl2', etc.
-        ax.set_xlabel('')  # No x-axis labels for upper row
-        ax.set_xticklabels([])  # Remove x-tick labels for upper row
+        ax.set_xlabel('Month', fontsize=12)
+        
+        # Make monsoon months (5-9) bold
+        xticklabels = ax.get_xticklabels()
+        for j, label in enumerate(xticklabels):
+            month_num = int(label.get_text()) if label.get_text().isdigit() else j+1
+            if 5 <= month_num <= 9:
+                label.set_fontweight('bold')
         
         if i == 0:
             ax.set_ylabel('Elevation bin', fontsize=12)
@@ -172,7 +178,7 @@ def create_combined_heatmaps_plot(langtang_data, mustang_data, global_vmin, glob
             ax.set_yticks([])
         
         # Panel labels
-        panel_label = f'L{i+1}'
+        panel_label = f'L{i+2}'
         ax.text(0.05, 0.85, panel_label, transform=ax.transAxes, 
                 fontsize=14, fontweight='bold', va='top', ha='left')
     
@@ -186,7 +192,7 @@ def create_combined_heatmaps_plot(langtang_data, mustang_data, global_vmin, glob
             data,
             annot=True,
             # cmap=cmc.managua,
-            cmap = 'coolwarm',
+            cmap = 'RdBu_r',
             center=100,
             ax=ax,
             cbar=False,
@@ -215,7 +221,7 @@ def create_combined_heatmaps_plot(langtang_data, mustang_data, global_vmin, glob
             ax.set_yticks([])
         
         # Panel labels
-        panel_label = f'M{i+1}'
+        panel_label = f'M{i+2}'
         ax.text(0.05, 0.85, panel_label, transform=ax.transAxes, 
                 fontsize=14, fontweight='bold', va='top', ha='left')
     
